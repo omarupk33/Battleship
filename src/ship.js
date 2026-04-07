@@ -5,15 +5,17 @@ export class Ship{
         this.sunk = false
     }
 
-    hit(){
-        this.hits+= 1
+    isSunk(){
+    if(this.length === this.hits){
+        this.sunk = true
+    }
+    return this.sunk
     }
 
-    isSunk(){
-        if(this.length === this.hits){
-            this.sunk = true
-        }
-        return this.sunk
+
+    hit(){
+        this.hits+= 1
+        this.isSunk()
     }
 
 }

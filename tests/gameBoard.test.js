@@ -1,8 +1,30 @@
 import { GameBoard } from "../src/gameBoard.js";
 
-// Should fix the way I approach the board
+// Game Table
 test('Test board', ()=>{
-    let test_board = new GameBoard().place_ship(2, 2)
+    let game = new GameBoard()
+    expect(game.board).toStrictEqual(
+        Array(10).fill('#').map(() => Array(10).fill('#'))
+    )
 
-    expect(test_board[0]).test_board.toBe('2,2')
+// Placing ship
+    game.place_ship(0, 0)
+    expect(typeof game.board[0][0]).toBe('object')
+    expect(game.isInBoundary([2,2], 8)).toBe(true)
+
+// Attack Coordinates with a ship
+    game.receiveAttack([0,0])
+
+    expect(game.board[0][0].hits).toBe(1)
+
+// Attack Coordinates without a ship
+    game.receiveAttack([0,1])
+    expect(game.board[0][1]).toBe('X')
+
+    // all ships are sunk 
+
+    // game.place_ship(2,3)
+    expect(game.allSunk()).toBe(false)
+
+
 })

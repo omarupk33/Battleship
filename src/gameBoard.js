@@ -8,14 +8,14 @@ export class GameBoard{
 
     // Maybe we can change this to include boundaries less than 0
     isInBoundary(location, length){
-        if (length + location[0] > 10 ||
-            length + location[1] > 10){
+        if ( length + location[0] > 10 ||
+             length + location[1] > 10){
                 return false
         }
         else return true
     }
 
-    // Now, we can only place it horizontally, yet there is enough time
+    // Now, we can only place it horizontally
     place_ship(x, y){
         let new_ship = new Ship(1)
         
@@ -27,8 +27,6 @@ export class GameBoard{
                 this.board[x][y+i] = new_ship
               }     
         }
-
-        // return this.board[x].filter(element => element === false)
     }
 
 
@@ -43,15 +41,18 @@ export class GameBoard{
     }
 
     // Gameboards should be able to report whether or not all of their ships have been sunk.
-    // allSunk(){
+    allSunk(){
+        for(let i = 0; i < 10;i++){
+            for (let j = 0; j < 10;j++){
+               if(typeof this.board[i][j] === 'object'){
+                // console.log(this.board[i][j])
+                if(!this.board[i][j].isSunk()){
+                    return false
+                }
+               }
+            }
+        }
 
-    // }
+        return true
+    }
 }
-
-// let game = new GameBoard()
-// console.log(game.place_ship(0, 0))
-// game.allSunk()
-// // game.receiveAttack([0,1])
-// // game.receiveAttack([0,0])
-// // console.log(game.board[0][0].hits)
-// // console.table(game.board)
