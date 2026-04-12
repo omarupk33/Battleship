@@ -1,50 +1,46 @@
 import { Player } from './Player'
-import { GameBoard } from './gameBoard'
-import { Ship } from './ship'
+import {board_node_creator} from './board_node'
+
 import "./styleSheet.css";
 
-let container = document.createElement('div')
-container.className = 'container'
-container.style.height = '100vh'
-container.style.width = '100vh'
-container.style.background = 'black'
-container.style.color = 'white'
-container.style.display = 'flex'
-container.style.flexDirection = 'column'
-container.style.justifyContent = 'center'
-container.style.alignItems = 'center'
 
+let container = document.createElement('div')
+    container.className = 'container'
 document.body.appendChild(container)
 
-let players_container = document.createElement('div')
-players_container.style.display = 'flex'
 
-let player1_block = document.createElement('div') 
-let player2_block = document.createElement('div')
+function player_node(number){
+let player_container = document.createElement('div')
+player_container.className = 'player_container'
 
-players_container.append(player1_block)
-players_container.append(player2_block)
-
-player1_block.style.background = 'blue'
-player1_block.style.width = '400px'
-player1_block.style.height = '200px'
+let player_block = document.createElement('div')
+player_block.className = `player${number}`
 
 
-player2_block.style.background = 'red'
-player2_block.style.width = '400px'
-player2_block.style.height = '200px'
+player_container.appendChild(player_block)
+let player = new Player('Omar', true)
+
+let player_name = document.createElement('h3')
+player_name.textContent = `Name: ${player.name}`
+player_block.appendChild(player_name)
 
 
+player.options.place_ship(1, 2)
+player.options.place_ship(6, 3)
+player.options.place_ship(6, 6)
+player.options.place_ship(3, 7)
 
 
-container.appendChild(players_container)
+let board_node = board_node_creator(player.board)
+board_node.className = `theBoard${number}`
 
+player_container.appendChild(board_node)
 
-let theBoard  = document.createElement('div')
-theBoard.style.background = 'orange'
-theBoard.style.height = '400px'
-theBoard.style.width ='800px'
-container.appendChild(theBoard)
+    return player_container
+}
 
+let player1_container =  player_node(1)
+let player2_container =  player_node(2)
 
-console.log(new Ship(2))
+container.appendChild(player1_container)
+container.appendChild(player2_container)

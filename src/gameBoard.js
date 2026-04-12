@@ -1,9 +1,8 @@
 import { Ship } from "./ship.js";
 
 export class GameBoard{
-    constructor(ship){
+    constructor(){
         this.board = Array(10).fill('#').map(() => Array(10).fill('#'))
-        this.ship = ship
     }
 
     // Maybe we can change this to include boundaries less than 0

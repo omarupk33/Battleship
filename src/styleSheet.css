@@ -2,3 +2,54 @@ body, html{
     padding: 0;
     margin: 0;
 }
+
+.container{
+height:100vh;
+width: auto;
+background : black;
+color: white;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+
+.player_container{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.player1{
+    background-color: red;
+    height:200px;
+    width :400px;
+}
+
+.player2{
+    background-color: blue;
+    height:200px;
+    width :400px;
+}
+
+
+
+.theBoard1, .theBoard2{
+    /* background-color:rgb(238, 216, 175); */
+    border: 2px solid black;  
+    height: 400px;
+    width: 400px;
+}
+.theBoard1 > div,
+.theBoard2 > div{
+    display: flex;
+    height: 10%;
+}
+
+.theBoard1 > div > *,
+.theBoard2 > div > *{
+
+    width: 10%;
+    background-color: rgb(164, 238, 201);
+
+}
