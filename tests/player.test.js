@@ -7,7 +7,7 @@ test('Checking on Player', ()=>{
     expect(player1.board).toStrictEqual(player2.board)
 
     expect(player1.board[0][0]).toBe('#')
-    player1.options.place_ship(0, 0)
+    player1.board.place_ship([0, 0])
     expect(typeof player1.board[0][0]).toBe('object')
     expect(player2.board[0][0]).toBe('#')
 

@@ -5,6 +5,10 @@ export class GameBoard{
         this.board = Array(10).fill('#').map(() => Array(10).fill('#'))
     }
 
+    getBoard(){
+        return this.board
+    }
+
     // Maybe we can change this to include boundaries less than 0
     isInBoundary(location, length){
         if ( length + location[0] > 10 ||
@@ -15,15 +19,15 @@ export class GameBoard{
     }
 
     // Now, we can only place it horizontally
-    place_ship(x, y){
+    place_ship(location){
         let new_ship = new Ship(1)
         
         for(let i = 0; i < new_ship.length; i++){
-            if(this.isInBoundary([x, y+i], new_ship.length) 
+            if(this.isInBoundary([location[0], location[1] + i], new_ship.length) 
                 // ||
             //    this.isInBoundary([x+i, y], new_ship.length)
             ){
-                this.board[x][y+i] = new_ship
+                this.board[location[0]][location[1] + i] = new_ship
               }     
         }
     }
@@ -44,7 +48,6 @@ export class GameBoard{
         for(let i = 0; i < 10;i++){
             for (let j = 0; j < 10;j++){
                if(typeof this.board[i][j] === 'object'){
-                // console.log(this.board[i][j])
                 if(!this.board[i][j].isSunk()){
                     return false
                 }

@@ -4,8 +4,7 @@ export class Player{
 
     constructor(name, isHuman){
         this.name = name
-        this.options = new GameBoard()
-        this.board = this.options.board
+        this.board = new GameBoard()
         this.human = isHuman
     }
 }

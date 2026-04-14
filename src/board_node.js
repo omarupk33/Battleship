@@ -1,24 +1,42 @@
-export function board_node_creator(board){
+import { createElement } from "react"
+
+export function board_node_creator(boardGame){
 
 let node  = document.createElement('div')
+
+    let board = boardGame.getBoard()
+    let options = boardGame
 
     for(let i = 0; i < 10;i++){
         let row = document.createElement('div')
         for (let j = 0; j < 10;j++){
-            let value = document.createElement('button')
+            let button = document.createElement('button')
             if(typeof board[i][j] === 'object'){
-            value.textContent = 'ship'
+            button.textContent = 'ship'
+            button.addEventListener('click', ()=>{
+                
+                options.receiveAttack([i, j])
+
+                if(board[i][j].isSunk()){
+                    button.disabled = true
+                }
+                if(options.allSunk()){
+                    console.log('You lost')
+                }
+            })
+            }
+            else{
+                button.textContent = board[i][j]
             }
 
-            else{value.textContent = board[i][j]}
-            value.dataset.id = `${[i, j]}`
-            value.dataset.val = board[i][j]
-
-            value.addEventListener('click', ()=>{
-                value.style.backgroundColor = 'red'
+            button.addEventListener('click', ()=>{
+                button.style.backgroundColor = 'red'
             })
-            row.appendChild(value)
+            row.appendChild(button)
         }
+
+
+
         node.appendChild(row)
     }
     return node

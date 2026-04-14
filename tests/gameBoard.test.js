@@ -8,7 +8,7 @@ test('Test board', ()=>{
     )
 
 // Placing ship
-    game.place_ship(0, 0)
+    game.place_ship([0, 0])
     expect(typeof game.board[0][0]).toBe('object')
     expect(game.isInBoundary([2,2], 8)).toBe(true)
 
@@ -21,10 +21,11 @@ test('Test board', ()=>{
     game.receiveAttack([0,1])
     expect(game.board[0][1]).toBe('X')
 
-    // all ships are sunk 
-
-    // game.place_ship(2,3)
+// all ships are sunk 
+    expect(game.allSunk()).toBe(true)
+    
+// One ship remains
+    game.place_ship([2,3])
     expect(game.allSunk()).toBe(false)
-
 
 })
