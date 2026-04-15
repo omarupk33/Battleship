@@ -10,7 +10,7 @@ export class GameBoard{
     }
 
     // Maybe we can change this to include boundaries less than 0
-    isInBoundary(location, length){
+    #isInBoundary(location, length){
         if ( length + location[0] > 10 ||
              length + location[1] > 10){
                 return false
@@ -23,7 +23,7 @@ export class GameBoard{
         let new_ship = new Ship(1)
         
         for(let i = 0; i < new_ship.length; i++){
-            if(this.isInBoundary([location[0], location[1] + i], new_ship.length) 
+            if(this.#isInBoundary([location[0], location[1] + i], new_ship.length) 
                 // ||
             //    this.isInBoundary([x+i, y], new_ship.length)
             ){
@@ -54,7 +54,62 @@ export class GameBoard{
                }
             }
         }
-
         return true
     }
+
+    // Should Explode and effect the range around the ship
+    // static exploded (ship){
+    //     if(ship.isSunk()){
+    //         for(let i = 0; i >3; i++){
+    //             for(let j = 0; j>;j++){
+    //             ship[]
+    //             }
+    //         }
+    //     }
+
+    // }
+
+    
+    board_node_creator(){
+        let node  = document.createElement('div')
+        for(let i = 0; i < 10;i++){
+            let row = document.createElement('div')
+            for (let j = 0; j < 10;j++){
+                let button = document.createElement('button')
+                if(typeof this.board[i][j] === 'object'){
+                button.textContent = '#'
+
+            button.addEventListener('click', ()=>{
+                    button.style.backgroundColor = 'red'
+                    console.log('hit')
+                })
+                button.addEventListener('click', ()=>{
+                    
+                    this.receiveAttack([i, j])
+                    button.textContent = 'X'
+                    if(this.board[i][j].isSunk()){
+                        button.disabled = true
+                    }
+                    if(this.allSunk()){
+                        console.log('You lost')
+                    }
+                })
+                }
+
+                else{
+                    button.textContent = this.board[i][j]
+
+                    button.addEventListener('click', ()=>{
+                        button.textContent = 'O'
+                    })
+                }
+
+                row.appendChild(button)
+            }
+
+            node.appendChild(row)
+        }
+        return node
+    }
+
 }
