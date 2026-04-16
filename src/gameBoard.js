@@ -10,7 +10,7 @@ export class GameBoard{
     }
 
     // Maybe we can change this to include boundaries less than 0
-    #isInBoundary(location, length){
+    isInBoundary(location, length = 0){
         if ( length + location[0] > 10 ||
              length + location[1] > 10){
                 return false
@@ -23,7 +23,7 @@ export class GameBoard{
         let new_ship = new Ship(1)
         
         for(let i = 0; i < new_ship.length; i++){
-            if(this.#isInBoundary([location[0], location[1] + i], new_ship.length) 
+            if(this.isInBoundary([location[0], location[1] + i], new_ship.length) 
                 // ||
             //    this.isInBoundary([x+i, y], new_ship.length)
             ){
@@ -58,16 +58,16 @@ export class GameBoard{
     }
 
     // Should Explode and effect the range around the ship
-    // static exploded (ship){
-    //     if(ship.isSunk()){
-    //         for(let i = 0; i >3; i++){
-    //             for(let j = 0; j>;j++){
-    //             ship[]
-    //             }
-    //         }
-    //     }
+    exploded (ship_node){
+        let loc = ship_node.dataset.loc
+        for(let i =0; i > 9;i++)
+        if(this.isInBoundary(loc)){
+            
+            console.log(loc[0])
+            console.log(loc[2])
 
-    // }
+        }
+    }
 
     
     board_node_creator(){
@@ -76,6 +76,8 @@ export class GameBoard{
             let row = document.createElement('div')
             for (let j = 0; j < 10;j++){
                 let button = document.createElement('button')
+                button.dataset.loc = [i,j]
+
                 if(typeof this.board[i][j] === 'object'){
                 button.textContent = '#'
 
@@ -83,12 +85,15 @@ export class GameBoard{
                     button.style.backgroundColor = 'red'
                     console.log('hit')
                 })
+
                 button.addEventListener('click', ()=>{
                     
                     this.receiveAttack([i, j])
                     button.textContent = 'X'
                     if(this.board[i][j].isSunk()){
                         button.disabled = true
+
+                        this.exploded(button)
                     }
                     if(this.allSunk()){
                         console.log('You lost')
