@@ -10,12 +10,12 @@ export class GameBoard{
     }
 
     // Maybe we can change this to include boundaries less than 0
-    isInBoundary(location, length = 0){
+    isInBoundary(location, length = 1){
         if ( length + location[0] > 10 ||
              length + location[1] > 10){
                 return false
         }
-        else return true
+        else {return true}
     }
 
     // Now, we can only place it horizontally
@@ -59,13 +59,18 @@ export class GameBoard{
 
     // Should Explode and effect the range around the ship
     exploded (ship_node){
-        let loc = ship_node.dataset.loc
-        for(let i =0; i > 9;i++)
-        if(this.isInBoundary(loc)){
-            
-            console.log(loc[0])
-            console.log(loc[2])
-
+        let loc = ship_node.dataset.loc.split(',')
+        loc[0] = Number.parseInt(loc[0])
+        loc[1] = Number.parseInt(loc[1])
+        let affected_area = [-1, 0, 1] 
+        
+        for( let i of affected_area){
+            for(let j of affected_area){
+                if(this.allSunk[(loc[0] + i), (loc[1] + j)]){
+                    if(typeof this.board[loc[0]+i][loc[1]+j] !== 'object')
+                    this.board[loc[0]+ i][loc[1]+ j].textContent = 'O'
+                }
+            }
         }
     }
 
@@ -76,7 +81,7 @@ export class GameBoard{
             let row = document.createElement('div')
             for (let j = 0; j < 10;j++){
                 let button = document.createElement('button')
-                button.dataset.loc = [i,j]
+                button.dataset.loc = `${i},${j}`
 
                 if(typeof this.board[i][j] === 'object'){
                 button.textContent = '#'
