@@ -10,13 +10,12 @@ export class GameBoard{
     }
 
     // Maybe we can change this to include boundaries less than 0
-    isInBoundary(location, length = 1){
-        if ( length + location[0] > 10 ||
-             length + location[1] > 10){
-                return false
+    isInBoundary([x, y], length = 1) {
+        return x >= 0 &&
+            y >= 0 &&
+            x + length <= 10 &&
+            y + length <= 10;
         }
-        else {return true}
-    }
 
     // Now, we can only place it horizontally
     place_ship(location){
@@ -63,14 +62,17 @@ export class GameBoard{
         loc[0] = Number.parseInt(loc[0])
         loc[1] = Number.parseInt(loc[1])
         let affected_area = [-1, 0, 1] 
-        
         for( let i of affected_area){
             for(let j of affected_area){
-                if(this.allSunk[(loc[0] + i), (loc[1] + j)]){
-                    if(typeof this.board[loc[0]+i][loc[1]+j] !== 'object')
-                    this.board[loc[0]+ i][loc[1]+ j].textContent = 'O'
+            // console.log( this.board[loc[0]+i][loc[1]+j])
+
+            //     if(typeof this.board[loc[0]+i][loc[1]+j] !== 'undefined'){
+            //         if(typeof this.board[loc[0]+i][loc[1]+j] !== 'object' &&
+            //             this.isInBoundary(this.board[loc[0]+i][loc[1]+j])){
+            //             this.board[loc[0]+ i][loc[1]+ j].textContent = 'O'
+            //             }
                 }
-            }
+            // }
         }
     }
 
@@ -97,7 +99,6 @@ export class GameBoard{
                     button.textContent = 'X'
                     if(this.board[i][j].isSunk()){
                         button.disabled = true
-
                         this.exploded(button)
                     }
                     if(this.allSunk()){
