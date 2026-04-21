@@ -56,29 +56,10 @@ export class GameBoard{
         return true
     }
 
-    // Should Explode and effect the range around the ship
-    exploded (ship_node){
-        let loc = ship_node.dataset.loc.split(',')
-        loc[0] = Number.parseInt(loc[0])
-        loc[1] = Number.parseInt(loc[1])
-        let affected_area = [-1, 0, 1] 
-        for( let i of affected_area){
-            for(let j of affected_area){
-            // console.log( this.board[loc[0]+i][loc[1]+j])
-
-            //     if(typeof this.board[loc[0]+i][loc[1]+j] !== 'undefined'){
-            //         if(typeof this.board[loc[0]+i][loc[1]+j] !== 'object' &&
-            //             this.isInBoundary(this.board[loc[0]+i][loc[1]+j])){
-            //             this.board[loc[0]+ i][loc[1]+ j].textContent = 'O'
-            //             }
-                }
-            // }
-        }
-    }
-
     
     board_node_creator(){
         let node  = document.createElement('div')
+        node.className = 'boardNode'
         for(let i = 0; i < 10;i++){
             let row = document.createElement('div')
             for (let j = 0; j < 10;j++){
@@ -87,20 +68,17 @@ export class GameBoard{
 
                 if(typeof this.board[i][j] === 'object'){
                 button.textContent = '#'
-
-            button.addEventListener('click', ()=>{
+                button.addEventListener('click', ()=>{
                     button.style.backgroundColor = 'red'
                     console.log('hit')
-                })
-
-                button.addEventListener('click', ()=>{
                     
                     this.receiveAttack([i, j])
                     button.textContent = 'X'
                     if(this.board[i][j].isSunk()){
                         button.disabled = true
-                        this.exploded(button)
+                        // this.exploded(button, node)
                     }
+
                     if(this.allSunk()){
                         console.log('You lost')
                     }
