@@ -2,15 +2,17 @@ import { GameBoard } from "./gameBoard"
 
 export class Player{
 
-    constructor(name){
+    constructor(name, computerMode){
         this.name = name
         this.board = new GameBoard()
+        this.computerMode = computerMode
     }
 
-    // Work on this
-    computerPlaying(){
-            let randomNumber1 = Math.floor(Math.random() * 10)
-            let randomNumber2 = Math.floor(Math.random() * 10)
-            opponent_board[randomNumber1][randomNumber2].click()
-    }
+    // computerPlaying(){
+            
+    //         let randomNumber1 = Math.floor(Math.random() * 10)
+    //         let randomNumber2 = Math.floor(Math.random() * 10) 
+
+    //         [randomNumber1][randomNumber2].click()
+    // }
 }

@@ -2,7 +2,7 @@ import { Player } from './Player'
 import "./styleSheet.css";
 
 
-function player_node(name , number, againstComputer = false){
+function player_node(name , number){
     let player_container = document.createElement('div')
     player_container.className = 'player_container'
 
@@ -38,10 +38,6 @@ function player_node(name , number, againstComputer = false){
             let current_player_btns = player_container.querySelectorAll(`button`)
             current_player_btns.forEach((button) =>{
             button.disabled = true
-
-            if(againstComputer){
-                player.computerPlaying(allButtons)
-            }
     })
 
     })
@@ -55,8 +51,22 @@ let container = document.createElement('div')
     container.className = 'container'
     document.body.appendChild(container)
 
+    let computerMode = confirm("Do you want to play against a bot?")
+
     let player1 = player_node('Omar', 1) 
-    let player2 = player_node( 'Computer',2, true)
+    let player2 = player_node( 'Computer',2)
+
+    if(computerMode){
+        player2.addEventListener('click', ()=>{
+            let opponent_board = document.getElementsByClassName('theBoard1')[0]
+            let random1 = Math.floor(Math.random() * 10)
+            let row = opponent_board.children[random1]
+
+            let random2 = Math.floor(Math.random() * 10)
+            row.children[random2].click()
+        })
+    }
+
 
 container.appendChild(player1)
 container.appendChild(player2)
