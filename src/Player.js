@@ -7,12 +7,4 @@ export class Player{
         this.board = new GameBoard()
         this.computerMode = computerMode
     }
-
-    // computerPlaying(){
-            
-    //         let randomNumber1 = Math.floor(Math.random() * 10)
-    //         let randomNumber2 = Math.floor(Math.random() * 10) 
-
-    //         [randomNumber1][randomNumber2].click()
-    // }
 }

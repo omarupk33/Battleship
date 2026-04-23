@@ -54,3 +54,10 @@ align-items: center;
     background-color: rgb(164, 238, 201);
 
 }
+
+.main_form{
+    background-color: aqua;
+    color: white;
+    height: 200px;
+    width: 200px;
+}
