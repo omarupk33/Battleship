@@ -56,8 +56,16 @@ align-items: center;
 }
 
 .main_form{
-    background-color: aqua;
+    background-color: rgb(95, 49, 6);
     color: white;
-    height: 200px;
-    width: 200px;
+    height: 220px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 2px dashed white;
+    margin:10px; 
+    align-items: center;
+    gap: 5px;
 }
+

@@ -70,26 +70,30 @@ function theForm(){
 
     let game_options = document.createElement('div')
 
-    let againstWho = document.createElement('p')
+    let againstWho = document.createElement('label')
         againstWho.textContent = 'Against:'
         againstWho.className = 'againstWho'
+        againstWho.htmlFor = 'againstWho'
 
 
-    let againstBotLabel = document.createElement('label')
-        againstBotLabel.textContent = 'Bot:'        
+    let selector = document.createElement('select')
+    selector.name = 'select_mode'
+    selector.id = 'select_mode'
+    selector.className = 'select_mode'
 
-    let againstBot = document.createElement('input')
+
+    let againstBot = document.createElement('option')
         againstBot.id = 'against_bot'
         againstBot.name = 'against_bot'
-    againstBotLabel.htmlFor ='against_bot'
+        againstBot.value = 'Bot'
+        againstBot.textContent = 'Bot'
 
-    let againstPlayerLabel = document.createElement('label')
-        againstPlayerLabel.textContent = 'Player: '
 
-    let againstPlayer = document.createElement('input')
+    let againstPlayer = document.createElement('option')
         againstPlayer.id =  'against_player'
+        againstPlayer.value = 'Player'
+        againstPlayer.textContent = 'Player'
         againstPlayer.name = 'against_player'
-    againstPlayerLabel.htmlFor = 'against_player'
 
 
     main_form.appendChild(player1)
@@ -100,10 +104,9 @@ function theForm(){
 
 
     game_options.appendChild(againstWho)
-    game_options.appendChild(againstBotLabel)
-    game_options.appendChild(againstBot)
-    game_options.appendChild(againstPlayerLabel)
-    game_options.appendChild(againstPlayer)
+    game_options.appendChild(selector)
+    selector.appendChild(againstBot)
+    selector.appendChild(againstPlayer)
 
 
     return main_form
