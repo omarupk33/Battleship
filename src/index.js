@@ -49,24 +49,37 @@ function theForm(){
     main_form.className = 'main_form'
 
 
+    let wrapper1 = document.createElement('div')
+
+
     let player1 = document.createElement('label')
     player1.textContent = 'Player-One:'
-
     let input1 = document.createElement('input')
     input1.name = 'input1'
     input1.id = 'input1'
     player1.htmlFor = 'input1'
     input1.placeholder = 'First player Name:'
 
+    wrapper1.appendChild(player1)
+    wrapper1.appendChild(input1)
 
+    main_form.appendChild(wrapper1)
+
+    let wrapper2 = document.createElement('div')
     let player2 = document.createElement('label')
     player2.textContent = 'Player-Two: '
-
     let input2 = document.createElement('input')
     input2.name = 'input2'
     input2.id = 'input2'
     player2.htmlFor = 'input2'
     input2.placeholder = 'Second player Name:'
+
+    wrapper2.appendChild(player2)
+    wrapper2.appendChild(input2)
+
+    main_form.appendChild(wrapper2)
+
+
 
     let game_options = document.createElement('div')
 
@@ -96,18 +109,18 @@ function theForm(){
         againstPlayer.name = 'against_player'
 
 
-    main_form.appendChild(player1)
-    main_form.appendChild(input1)
-    main_form.appendChild(player2)
-    main_form.appendChild(input2)
+    let submit_btn = document.createElement('button')
+    submit_btn.textContent = 'Submit'
+    submit_btn.type = 'button'
+    submit_btn.className = 'submit_btn'
+
+
     main_form.appendChild(game_options)
-
-
     game_options.appendChild(againstWho)
     game_options.appendChild(selector)
     selector.appendChild(againstBot)
     selector.appendChild(againstPlayer)
-
+    main_form.appendChild(submit_btn)
 
     return main_form
 }
@@ -117,8 +130,6 @@ function main(){
 let container = document.createElement('div')
     container.className = 'container'
     document.body.appendChild(container)
-
-    // let computerMode = confirm("Do you want to play against a bot?")
 
     let player1 = player_node('Omar', 1) 
     let player2 = player_node( 'Computer',2)
@@ -134,9 +145,29 @@ let container = document.createElement('div')
     }
 
     let form_container = theForm()
+
     container.appendChild(player1)
     container.appendChild(player2)
     container.appendChild(form_container)
 }
 
-main()
+
+function startGame(){
+    let start_screen = document.createElement('div')
+    start_screen.style.background = 'black'
+    start_screen.className = 'start_screen'
+    document.body.appendChild(start_screen)
+
+    let start_btn = document.createElement('button')
+    start_btn.textContent = 'Start Game'
+    start_btn.type = 'button'
+    start_btn.className = 'start_btn'
+
+
+    start_btn.onclick = main()
+
+    start_screen.appendChild(start_btn)
+    
+}  
+
+startGame()
