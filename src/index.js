@@ -1,6 +1,6 @@
 import { Player } from './Player'
 import "./styleSheet.css";
-
+import SB from './assets/screen_background.png'
 
 function player_node(name , number){
     let player_container = document.createElement('div')
@@ -110,9 +110,14 @@ function theForm(){
 
 
     let submit_btn = document.createElement('button')
-    submit_btn.textContent = 'Submit'
+    submit_btn.textContent = 'Start'
     submit_btn.type = 'button'
     submit_btn.className = 'submit_btn'
+    submit_btn.onclick = ()=>{
+        main_form.style.display = 'none'
+        document.body.children[0].style.display = 'none'
+        main()
+    }
 
 
     main_form.appendChild(game_options)
@@ -144,11 +149,10 @@ let container = document.createElement('div')
         })
     }
 
-    let form_container = theForm()
 
     container.appendChild(player1)
     container.appendChild(player2)
-    container.appendChild(form_container)
+
 }
 
 
@@ -158,16 +162,26 @@ function startGame(){
     start_screen.className = 'start_screen'
     document.body.appendChild(start_screen)
 
+
+    let background_pic = document.createElement('img')
+    background_pic.src = SB
+    background_pic.alt = 'BattleShip'
+    background_pic.className = 'screen_background'
+
+
     let start_btn = document.createElement('button')
     start_btn.textContent = 'Start Game'
     start_btn.type = 'button'
     start_btn.className = 'start_btn'
 
-
-    start_btn.onclick = main()
+    start_btn.onclick = ()=>{
+        start_btn.style.display = 'none'
+        document.body.appendChild(theForm())    
+    }
 
     start_screen.appendChild(start_btn)
-    
+    start_screen.appendChild(background_pic)
+
 }  
 
 startGame()
