@@ -2,8 +2,7 @@ import { GameBoard } from "./gameBoard"
 
 export class Player{
 
-    constructor(name, computerMode){
-        this.name = name
+    constructor(computerMode){
         this.board = new GameBoard()
         this.computerMode = computerMode
     }

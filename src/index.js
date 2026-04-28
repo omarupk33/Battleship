@@ -2,7 +2,8 @@ import { Player } from './Player'
 import "./styleSheet.css";
 import SB from './assets/screen_background.png'
 
-function player_node(name , number){
+
+function player_node(number){
     let player_container = document.createElement('div')
     player_container.className = 'player_container'
 
@@ -10,11 +11,13 @@ function player_node(name , number){
     player_block.className = `player${number}`
 
     player_container.appendChild(player_block)
-    let player = new Player(name)
+    
+    let player = new Player()
     let board = player.board
 
     let player_name = document.createElement('h3')
-    player_name.textContent = `Name: ${name}`
+    // player_name.textContent = `Name: ${name}`
+    player_name.className = 'player_name'
     player_block.appendChild(player_name)
 
     let ship_locs = [[0, 1],[2, 2],[6, 3],[4, 4]]
@@ -117,6 +120,15 @@ function theForm(){
         main_form.style.display = 'none'
         document.body.children[0].style.display = 'none'
         main()
+
+        let players_name = document.querySelectorAll('.player_name')
+        players_name[0].textContent = input1.value
+        players_name[1].textContent = input2.value
+
+        // Make changes here to switch to a bot when necessary 
+
+        let player2 = document.querySelector('.player2')
+        
     }
 
 
@@ -136,8 +148,8 @@ let container = document.createElement('div')
     container.className = 'container'
     document.body.appendChild(container)
 
-    let player1 = player_node('Omar', 1) 
-    let player2 = player_node( 'Computer',2)
+    let player1 = player_node('player1', 1) 
+    let player2 = player_node( 'player2',2)
 
     if(true){
         player2.addEventListener('click', ()=>{
@@ -181,7 +193,6 @@ function startGame(){
 
     start_screen.appendChild(start_btn)
     start_screen.appendChild(background_pic)
-
 }  
 
 startGame()
