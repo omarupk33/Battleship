@@ -73,6 +73,11 @@ align-items: center;
   transform: translate(-50%, -50%);
 }
 
+input1:required,
+input2:required{
+    border: 1px red solid;
+}
+
 
 
 .start_screen{

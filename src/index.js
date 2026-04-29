@@ -2,7 +2,6 @@ import { Player } from './Player'
 import "./styleSheet.css";
 import SB from './assets/screen_background.png'
 
-
 function player_node(number){
     let player_container = document.createElement('div')
     player_container.className = 'player_container'
@@ -16,7 +15,6 @@ function player_node(number){
     let board = player.board
 
     let player_name = document.createElement('h3')
-    // player_name.textContent = `Name: ${name}`
     player_name.className = 'player_name'
     player_block.appendChild(player_name)
 
@@ -62,6 +60,7 @@ function theForm(){
     input1.id = 'input1'
     player1.htmlFor = 'input1'
     input1.placeholder = 'First player Name:'
+    // input1.required = true
 
     wrapper1.appendChild(player1)
     wrapper1.appendChild(input1)
@@ -76,6 +75,8 @@ function theForm(){
     input2.id = 'input2'
     player2.htmlFor = 'input2'
     input2.placeholder = 'Second player Name:'
+    // input2.required = true
+    
 
     wrapper2.appendChild(player2)
     wrapper2.appendChild(input2)
@@ -116,6 +117,7 @@ function theForm(){
     submit_btn.textContent = 'Start'
     submit_btn.type = 'button'
     submit_btn.className = 'submit_btn'
+
     submit_btn.onclick = ()=>{
         main_form.style.display = 'none'
         document.body.children[0].style.display = 'none'
@@ -148,18 +150,28 @@ let container = document.createElement('div')
     container.className = 'container'
     document.body.appendChild(container)
 
-    let player1 = player_node('player1', 1) 
-    let player2 = player_node( 'player2',2)
 
-    if(true){
+    // Should not allow player to click when bot is playing 
+
+    let player1 = player_node(1) 
+    let player2 = player_node(2)
+
+   
+
+
+    let selector_option = document.querySelector('select')
+    if(selector_option.value === 'Bot'){
         player2.addEventListener('click', ()=>{
+
+            setTimeout(()=>{
             let opponent_board = document.getElementsByClassName('theBoard1')[0]
             let random1 = Math.floor(Math.random() * 10)
             let row = opponent_board.children[random1]
             let random2 = Math.floor(Math.random() * 10)
-            row.children[random2].click()
-        })
-    }
+            row.children[random2].click()}, 1000)
+            } 
+        )
+        }
 
 
     container.appendChild(player1)
