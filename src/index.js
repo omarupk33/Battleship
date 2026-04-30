@@ -21,9 +21,9 @@ function player_node(number){
     let ship_locs = [[0, 1],[2, 2],[6, 3],[4, 4]]
 
     board.place_ship(ship_locs[0])
-    board.place_ship(ship_locs[1])
-    board.place_ship(ship_locs[2])
-    board.place_ship(ship_locs[3])
+    // board.place_ship(ship_locs[1])
+    // board.place_ship(ship_locs[2])
+    // board.place_ship(ship_locs[3])
 
     let board_node = board.board_node_creator()
     board_node.className = `theBoard${number}`
@@ -33,14 +33,20 @@ function player_node(number){
     player_container.addEventListener('click', ()=>{
             let allButtons = document.querySelectorAll('button')
                 allButtons.forEach((button)=>{
-                    button.disabled = false
+                    button.style.display = 'block'
                 })
 
             let current_player_btns = player_container.querySelectorAll(`button`)
             current_player_btns.forEach((button) =>{
-            button.disabled = true
+            button.style.display = 'none'
+
+        if(board.allSunk()){
+            gameOver(player_block.textContent)
+        }
     })
     })
+
+
     return player_container
 }
 
@@ -49,9 +55,7 @@ function theForm(){
     let main_form = document.createElement('form')
     main_form.className = 'main_form'
 
-
     let wrapper1 = document.createElement('div')
-
 
     let player1 = document.createElement('label')
     player1.textContent = 'Player-One:'
@@ -60,7 +64,7 @@ function theForm(){
     input1.id = 'input1'
     player1.htmlFor = 'input1'
     input1.placeholder = 'First player Name:'
-    // input1.required = true
+    input1.required = true
 
     wrapper1.appendChild(player1)
     wrapper1.appendChild(input1)
@@ -75,7 +79,7 @@ function theForm(){
     input2.id = 'input2'
     player2.htmlFor = 'input2'
     input2.placeholder = 'Second player Name:'
-    // input2.required = true
+    input2.required = true
     
 
     wrapper2.appendChild(player2)
@@ -83,10 +87,7 @@ function theForm(){
 
     main_form.appendChild(wrapper2)
 
-
-
     let game_options = document.createElement('div')
-
     let againstWho = document.createElement('label')
         againstWho.textContent = 'Against:'
         againstWho.className = 'againstWho'
@@ -118,7 +119,8 @@ function theForm(){
     submit_btn.type = 'button'
     submit_btn.className = 'submit_btn'
 
-    submit_btn.onclick = ()=>{
+    submit_btn.addEventListener('click',()=>{
+        
         main_form.style.display = 'none'
         document.body.children[0].style.display = 'none'
         main()
@@ -127,11 +129,8 @@ function theForm(){
         players_name[0].textContent = input1.value
         players_name[1].textContent = input2.value
 
-        // Make changes here to switch to a bot when necessary 
-
         let player2 = document.querySelector('.player2')
-        
-    }
+    })
 
 
     main_form.appendChild(game_options)
@@ -150,25 +149,19 @@ let container = document.createElement('div')
     container.className = 'container'
     document.body.appendChild(container)
 
-
-    // Should not allow player to click when bot is playing 
-
-    let player1 = player_node(1) 
+    let player1 = player_node(1)
     let player2 = player_node(2)
-
-   
 
 
     let selector_option = document.querySelector('select')
     if(selector_option.value === 'Bot'){
         player2.addEventListener('click', ()=>{
-
             setTimeout(()=>{
             let opponent_board = document.getElementsByClassName('theBoard1')[0]
             let random1 = Math.floor(Math.random() * 10)
             let row = opponent_board.children[random1]
             let random2 = Math.floor(Math.random() * 10)
-            row.children[random2].click()}, 1000)
+            row.children[random2].click()}, 2000)
             } 
         )
         }
@@ -206,5 +199,22 @@ function startGame(){
     start_screen.appendChild(start_btn)
     start_screen.appendChild(background_pic)
 }  
+
+
+    function gameOver(name){
+    let end_screen = document.createElement('div')
+    end_screen.className = 'end_screen'
+
+    let winner = document.createElement('h2')
+    winner.textContent = `${name} Lost`
+
+    let end_game_btn = document.createElement('button')
+    end_game_btn.textContent = 'End game'
+
+    end_screen.appendChild(winner)
+    end_screen.appendChild(end_game_btn)
+
+    document.body.appendChild(end_screen)
+    }
 
 startGame()

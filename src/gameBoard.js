@@ -20,7 +20,7 @@ export class GameBoard{
     // Now, we can only place it horizontally
     place_ship(location){
         let new_ship = new Ship(1)
-        
+
         for(let i = 0; i < new_ship.length; i++){
             if(this.isInBoundary([location[0], location[1] + i], new_ship.length) 
                 // ||
@@ -42,7 +42,6 @@ export class GameBoard{
         )
     }
 
-    // Gameboards should be able to report whether or not all of their ships have been sunk.
     allSunk(){
         for(let i = 0; i < 10;i++){
             for (let j = 0; j < 10;j++){
@@ -70,18 +69,14 @@ export class GameBoard{
                 button.textContent = '#'
                 button.addEventListener('click', ()=>{
                     button.style.backgroundColor = 'red'
-                    console.log('hit')
                     
                     this.receiveAttack([i, j])
                     button.textContent = 'X'
                     if(this.board[i][j].isSunk()){
                         button.disabled = true
-                        // this.exploded(button, node)
                     }
 
-                    if(this.allSunk()){
-                        console.log('You lost')
-                    }
+
                 })
                 }
 
@@ -90,6 +85,7 @@ export class GameBoard{
 
                     button.addEventListener('click', ()=>{
                         button.textContent = 'O'
+                        button.disabled = true
                     })
                 }
 
