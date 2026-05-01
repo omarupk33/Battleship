@@ -9,7 +9,6 @@ export class GameBoard{
         return this.board
     }
 
-    // Maybe we can change this to include boundaries less than 0
     isInBoundary([x, y], length = 1) {
         return x >= 0 &&
             y >= 0 &&
@@ -75,7 +74,6 @@ export class GameBoard{
                     if(this.board[i][j].isSunk()){
                         button.disabled = true
                     }
-
 
                 })
                 }

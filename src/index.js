@@ -20,6 +20,8 @@ function player_node(number){
 
     let ship_locs = [[0, 1],[2, 2],[6, 3],[4, 4]]
 
+
+    // Build a system to add ships to clicked coordinates
     board.place_ship(ship_locs[0])
     // board.place_ship(ship_locs[1])
     // board.place_ship(ship_locs[2])
@@ -201,6 +203,7 @@ function startGame(){
 }  
 
 
+// Complete this screen
     function gameOver(name){
     let end_screen = document.createElement('div')
     end_screen.className = 'end_screen'
