@@ -41,11 +41,13 @@ function player_node(number){
             let current_player_btns = player_container.querySelectorAll(`button`)
             current_player_btns.forEach((button) =>{
             button.style.display = 'none'
+    })
 
         if(board.allSunk()){
-            gameOver(player_block.textContent)
+        gameOver(player_block.textContent)
+
         }
-    })
+
     })
 
 
@@ -213,6 +215,15 @@ function startGame(){
 
     let end_game_btn = document.createElement('button')
     end_game_btn.textContent = 'End game'
+
+    end_game_btn.addEventListener('click', ()=>{
+        let start_screen = document.querySelector('.screen_background')
+        let container = document.querySelector('.container')
+
+        start_screen.style.display = 'flex'
+        container.style.display = 'none'  
+    })
+
 
     end_screen.appendChild(winner)
     end_screen.appendChild(end_game_btn)

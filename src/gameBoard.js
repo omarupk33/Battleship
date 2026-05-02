@@ -30,8 +30,6 @@ export class GameBoard{
         }
     }
 
-
-    // ReceiveAttack function that takes a pair of coordinates
     receiveAttack(location){
         if(typeof this.board[location[0]][location[1]] === 'object'){
             this.board[location[0]][location[1]].hit()
