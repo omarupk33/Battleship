@@ -22,13 +22,13 @@ align-items: center;
 }
 
 
-.player1{
+.player_block1{
     background-color: red;
     height:200px;
     width :400px;
 }
 
-.player2{
+.player_block2{
     background-color: blue;
     height:200px;
     width :400px;
@@ -110,11 +110,16 @@ input2:required{
 .end_screen{
     background-color: rgb(255, 255, 255);
     position: absolute;
- 
-    height: 200px;
-    width: 200px;
+    height: auto;
+    width: 70vh;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
 
+.end_game_btn{
+    height: 5vh;
+    width: 30vh;
+    font-size: 25px;
+    border-radius:80% ;
 }

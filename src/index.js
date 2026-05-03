@@ -7,7 +7,7 @@ function player_node(number){
     player_container.className = 'player_container'
 
     let player_block = document.createElement('div')
-    player_block.className = `player${number}`
+    player_block.className = `player_block${number}`
 
     player_container.appendChild(player_block)
     
@@ -15,7 +15,7 @@ function player_node(number){
     let board = player.board
 
     let player_name = document.createElement('h3')
-    player_name.className = 'player_name'
+    player_name.className = `player${number}`
     player_block.appendChild(player_name)
 
     let ship_locs = [[0, 1],[2, 2],[6, 3],[4, 4]]
@@ -30,6 +30,7 @@ function player_node(number){
     let board_node = board.board_node_creator()
     board_node.className = `theBoard${number}`
     player_container.appendChild(board_node)
+    board_node.value = board
     
 
     player_container.addEventListener('click', ()=>{
@@ -44,8 +45,7 @@ function player_node(number){
     })
 
         if(board.allSunk()){
-        gameOver(player_block.textContent)
-
+        gameOver()
         }
 
     })
@@ -123,17 +123,15 @@ function theForm(){
     submit_btn.type = 'button'
     submit_btn.className = 'submit_btn'
 
-    submit_btn.addEventListener('click',()=>{
-        
+    submit_btn.addEventListener('click',()=>{        
         main_form.style.display = 'none'
         document.body.children[0].style.display = 'none'
         main()
 
-        let players_name = document.querySelectorAll('.player_name')
-        players_name[0].textContent = input1.value
-        players_name[1].textContent = input2.value
-
-        let player2 = document.querySelector('.player2')
+        let player_name1 = document.querySelector('.player1')
+        let player_name2 = document.querySelector('.player2')
+        player_name1.textContent = input1.value
+        player_name2.textContent = input2.value
     })
 
 
@@ -160,13 +158,17 @@ let container = document.createElement('div')
     let selector_option = document.querySelector('select')
     if(selector_option.value === 'Bot'){
         player2.addEventListener('click', ()=>{
-            setTimeout(()=>{
-            let opponent_board = document.getElementsByClassName('theBoard1')[0]
-            let random1 = Math.floor(Math.random() * 10)
-            let row = opponent_board.children[random1]
-            let random2 = Math.floor(Math.random() * 10)
-            row.children[random2].click()}, 2000)
-            } 
+
+            // Set time is breaking everything so I should something about it
+                if(document.body.contains(container)){
+                setTimeout(()=>{
+                let opponent_board = document.getElementsByClassName('theBoard1')[0]
+                let random1 = Math.floor(Math.random() * 10)
+                let row = opponent_board.children[random1]
+                let random2 = Math.floor(Math.random() * 10)
+                row.children[random2].click()}, 2000)
+                }   
+            }
         )
         }
 
@@ -205,30 +207,62 @@ function startGame(){
 }  
 
 
-// Complete this screen
-    function gameOver(name){
+    function gameOver(){
     let end_screen = document.createElement('div')
     end_screen.className = 'end_screen'
 
+
+    let loser = document.createElement('h2')
+    loser.textContent = `Lost: `
+    loser.style.background = 'red'
+
     let winner = document.createElement('h2')
-    winner.textContent = `${name} Lost`
+    winner.textContent = `Won: `
+    winner.style.background = 'blue'
+
+    let player1 = get_Player_and_board(1)
+    let player2 = get_Player_and_board(2)
+
 
     let end_game_btn = document.createElement('button')
     end_game_btn.textContent = 'End game'
-
+    end_game_btn.className = 'end_game_btn'
     end_game_btn.addEventListener('click', ()=>{
-        let start_screen = document.querySelector('.screen_background')
-        let container = document.querySelector('.container')
 
-        start_screen.style.display = 'flex'
-        container.style.display = 'none'  
+    let start_screen = document.querySelector('.start_screen')
+    let theForm = document.querySelector('.main_form')
+    let container = document.querySelector('.container')
+
+    start_screen.style.display = 'flex'
+
+        container.remove()
+        theForm.remove()
+        end_screen.remove()
     })
+
+    if(player1.board.value.allSunk()){
+    winner.textContent = winner.textContent + player2.name.textContent
+    loser.textContent = loser.textContent + player1.name.textContent
+    }
+
+    if(player2.board.value.allSunk()){
+    winner.textContent = winner.textContent + player1.name.textContent
+    loser.textContent = loser.textContent + player2.name.textContent
+    }
 
 
     end_screen.appendChild(winner)
+    end_screen.appendChild(loser)
+
     end_screen.appendChild(end_game_btn)
 
-    document.body.appendChild(end_screen)
-    }
+    document.body.appendChild(end_screen)    
 
+}
+
+    function get_Player_and_board(number){
+        let name = document.querySelector(`.player${number}`)
+        let board = document.querySelector(`.theBoard${number}`)        
+        return {name, board}
+    }
 startGame()
