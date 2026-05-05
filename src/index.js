@@ -23,9 +23,7 @@ function player_node(number){
 
     // Build a system to add ships to clicked coordinates
     board.place_ship(ship_locs[0])
-    // board.place_ship(ship_locs[1])
-    // board.place_ship(ship_locs[2])
-    // board.place_ship(ship_locs[3])
+
 
     let board_node = board.board_node_creator()
     board_node.className = `theBoard${number}`
@@ -56,6 +54,25 @@ function player_node(number){
 
 function theForm(){
 
+    function make_ship_options(){
+            let ship = document.createElement('div')
+
+        for(let i = 0; i < 5;i++){
+            let select_x = document.createElement('select')
+            let select_y = document.createElement('select')
+
+            for(let j = 0; j <10;j++){
+                select_x.add(new Option(j))
+                select_y.add(new Option(j))
+            }
+            ship.appendChild(select_x)
+            ship.appendChild(select_y)
+
+        }
+            return ship
+    }
+
+
     let main_form = document.createElement('form')
     main_form.className = 'main_form'
 
@@ -70,8 +87,18 @@ function theForm(){
     input1.placeholder = 'First player Name:'
     input1.required = true
 
+
+let ship1 = make_ship_options()
+    
+
+    let placing_ships1 = document.createElement('div')
+    placing_ships1.appendChild(ship1)
+
+
+
     wrapper1.appendChild(player1)
     wrapper1.appendChild(input1)
+    wrapper1.appendChild(placing_ships1)
 
     main_form.appendChild(wrapper1)
 
@@ -86,9 +113,13 @@ function theForm(){
     input2.required = true
     
 
+    let ship2 = make_ship_options()
+    let placing_ships2 = document.createElement('div')
+    placing_ships2.appendChild(ship2)
+
     wrapper2.appendChild(player2)
     wrapper2.appendChild(input2)
-
+    wrapper2.appendChild(placing_ships2)
     main_form.appendChild(wrapper2)
 
     let game_options = document.createElement('div')
@@ -154,24 +185,20 @@ let container = document.createElement('div')
     let player1 = player_node(1)
     let player2 = player_node(2)
 
-
+    let click_timer
     let selector_option = document.querySelector('select')
     if(selector_option.value === 'Bot'){
         player2.addEventListener('click', ()=>{
 
-            // Set time is breaking everything so I should something about it
-                if(document.body.contains(container)){
-                setTimeout(()=>{
+                click_timer = setTimeout(()=>{
                 let opponent_board = document.getElementsByClassName('theBoard1')[0]
                 let random1 = Math.floor(Math.random() * 10)
                 let row = opponent_board.children[random1]
                 let random2 = Math.floor(Math.random() * 10)
-                row.children[random2].click()}, 2000)
+                row.children[random2].click()}, 1000)
                 }   
-            }
         )
         }
-
 
     container.appendChild(player1)
     container.appendChild(player2)
