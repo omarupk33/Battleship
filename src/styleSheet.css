@@ -58,8 +58,8 @@ align-items: center;
 .main_form{
     background-color: rgb(74, 125, 236);
     color: white;
-    height: 220px;
-    width: 250px;
+    height: 450px;
+    width: 450px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

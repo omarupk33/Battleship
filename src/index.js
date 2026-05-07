@@ -54,12 +54,16 @@ function player_node(number){
 
 function theForm(){
 
-    function make_ship_options(){
-            let ship = document.createElement('div')
+    function make_ship_options(container){
 
         for(let i = 0; i < 5;i++){
+            let ship = document.createElement('div')
+            ship.className = 'form_ship'
+            ship.textContent = `ship (length ${i+1}): `
             let select_x = document.createElement('select')
+            select_x.className = 'selectX'
             let select_y = document.createElement('select')
+            select_y.className = 'selectY'
 
             for(let j = 0; j <10;j++){
                 select_x.add(new Option(j))
@@ -68,8 +72,8 @@ function theForm(){
             ship.appendChild(select_x)
             ship.appendChild(select_y)
 
+            container.appendChild(ship)
         }
-            return ship
     }
 
 
@@ -88,11 +92,10 @@ function theForm(){
     input1.required = true
 
 
-let ship1 = make_ship_options()
     
 
     let placing_ships1 = document.createElement('div')
-    placing_ships1.appendChild(ship1)
+    make_ship_options(placing_ships1)
 
 
 
@@ -113,9 +116,9 @@ let ship1 = make_ship_options()
     input2.required = true
     
 
-    let ship2 = make_ship_options()
     let placing_ships2 = document.createElement('div')
-    placing_ships2.appendChild(ship2)
+    make_ship_options(placing_ships2)
+    
 
     wrapper2.appendChild(player2)
     wrapper2.appendChild(input2)
