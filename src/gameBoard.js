@@ -22,11 +22,10 @@ export class GameBoard{
 
         for(let i = 0; i < new_ship.length; i++){
             if(this.isInBoundary([location[0], location[1] + i], new_ship.length) 
-                // ||
-            //    this.isInBoundary([x+i, y], new_ship.length)
             ){
                 this.board[location[0]][location[1] + i] = new_ship
-              }     
+            }
+
         }
     }
 

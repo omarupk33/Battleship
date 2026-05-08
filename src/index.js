@@ -18,11 +18,46 @@ function player_node(number){
     player_name.className = `player${number}`
     player_block.appendChild(player_name)
 
-    let ship_locs = [[0, 1],[2, 2],[6, 3],[4, 4]]
+    function make_ship_options(container){
+    for(let i = 0; i < 5;i++){
+        let ship = document.createElement('div')
+        let confirm_ship_loc_btn = document.createElement('button')
+        confirm_ship_loc_btn.textContent = 'Confirm'
+
+        // Work here. It's all messy yet I'm sure you can do it!!
+        confirm_ship_loc_btn.addEventListener('click', ()=>{
+            if(board.isInBoundary([select_x.value, select_y.value] ||
+               typeof board.board[select_x.value][select_y.value] !== 'object')){
+                board.place_ship([select_x.value, select_y.value])
+            }
+            else{
+                alert('Out of boundary')
+            }
+        })
 
 
-    // Build a system to add ships to clicked coordinates
-    board.place_ship(ship_locs[0])
+
+        ship.className = 'form_ships'
+        ship.textContent = `ship (length ${i+1}): `
+        let select_x = document.createElement('select')
+        select_x.className = 'selectX'
+        let select_y = document.createElement('select')
+        select_y.className = 'selectY'
+
+        for(let j = 0; j <11;j++){
+            select_x.add(new Option(j))
+            select_y.add(new Option(j))
+        }
+
+        ship.appendChild(select_x)
+        ship.appendChild(select_y)
+        ship.appendChild(confirm_ship_loc_btn)
+
+
+        container.appendChild(ship)
+    }
+}
+    make_ship_options(player_block)
 
 
     let board_node = board.board_node_creator()
@@ -31,7 +66,7 @@ function player_node(number){
     board_node.value = board
     
 
-    player_container.addEventListener('click', ()=>{
+    player_container.children[1].addEventListener('click', ()=>{
             let allButtons = document.querySelectorAll('button')
                 allButtons.forEach((button)=>{
                     button.style.display = 'block'
@@ -54,33 +89,14 @@ function player_node(number){
 
 function theForm(){
 
-    function make_ship_options(container){
 
-        for(let i = 0; i < 5;i++){
-            let ship = document.createElement('div')
-            ship.className = 'form_ship'
-            ship.textContent = `ship (length ${i+1}): `
-            let select_x = document.createElement('select')
-            select_x.className = 'selectX'
-            let select_y = document.createElement('select')
-            select_y.className = 'selectY'
-
-            for(let j = 0; j <10;j++){
-                select_x.add(new Option(j))
-                select_y.add(new Option(j))
-            }
-            ship.appendChild(select_x)
-            ship.appendChild(select_y)
-
-            container.appendChild(ship)
-        }
-    }
 
 
     let main_form = document.createElement('form')
     main_form.className = 'main_form'
 
     let wrapper1 = document.createElement('div')
+    wrapper1.className = 'wrapper'
 
     let player1 = document.createElement('label')
     player1.textContent = 'Player-One:'
@@ -95,8 +111,7 @@ function theForm(){
     
 
     let placing_ships1 = document.createElement('div')
-    make_ship_options(placing_ships1)
-
+    placing_ships1.className = 'placing_ship'
 
 
     wrapper1.appendChild(player1)
@@ -106,8 +121,11 @@ function theForm(){
     main_form.appendChild(wrapper1)
 
     let wrapper2 = document.createElement('div')
+    wrapper2.className = 'wrapper'
+
+
     let player2 = document.createElement('label')
-    player2.textContent = 'Player-Two: '
+    player2.textContent = 'Player-Two:'
     let input2 = document.createElement('input')
     input2.name = 'input2'
     input2.id = 'input2'
@@ -117,8 +135,8 @@ function theForm(){
     
 
     let placing_ships2 = document.createElement('div')
-    make_ship_options(placing_ships2)
-    
+    placing_ships2.className = 'placing_ship'
+
 
     wrapper2.appendChild(player2)
     wrapper2.appendChild(input2)
@@ -191,8 +209,8 @@ let container = document.createElement('div')
     let click_timer
     let selector_option = document.querySelector('select')
     if(selector_option.value === 'Bot'){
-        player2.addEventListener('click', ()=>{
-
+        player2.children[1].addEventListener('click', ()=>{
+                
                 click_timer = setTimeout(()=>{
                 let opponent_board = document.getElementsByClassName('theBoard1')[0]
                 let random1 = Math.floor(Math.random() * 10)
@@ -241,7 +259,6 @@ function startGame(){
     let end_screen = document.createElement('div')
     end_screen.className = 'end_screen'
 
-
     let loser = document.createElement('h2')
     loser.textContent = `Lost: `
     loser.style.background = 'red'
@@ -268,6 +285,7 @@ function startGame(){
         container.remove()
         theForm.remove()
         end_screen.remove()
+    
     })
 
     if(player1.board.value.allSunk()){
@@ -280,10 +298,8 @@ function startGame(){
     loser.textContent = loser.textContent + player2.name.textContent
     }
 
-
     end_screen.appendChild(winner)
     end_screen.appendChild(loser)
-
     end_screen.appendChild(end_game_btn)
 
     document.body.appendChild(end_screen)    
