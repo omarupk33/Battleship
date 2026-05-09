@@ -18,19 +18,48 @@ function player_node(number){
     player_name.className = `player${number}`
     player_block.appendChild(player_name)
 
+    let board_node = board.board_node_creator()
+    board_node.className = `theBoard${number}`
+    player_container.appendChild(board_node)
+    board_node.value = board
+    
+
+    function all_ship_placed(){
+        let confirm_ship_loc_btn = document.querySelectorAll('.confirm_loc_btn')
+        confirm_ship_loc_btn.forEach((button)=>{
+            if(!button.disabled){
+                return false
+            }
+            return true
+        })
+    }
+
     function make_ship_options(container){
     for(let i = 0; i < 5;i++){
         let ship = document.createElement('div')
         let confirm_ship_loc_btn = document.createElement('button')
+        confirm_ship_loc_btn.className = 'confirm_loc_btn'
         confirm_ship_loc_btn.textContent = 'Confirm'
 
         // Work here. It's all messy yet I'm sure you can do it!!
         confirm_ship_loc_btn.addEventListener('click', ()=>{
-            if(board.isInBoundary([select_x.value, select_y.value] ||
-               typeof board.board[select_x.value][select_y.value] !== 'object')){
-                board.place_ship([select_x.value, select_y.value])
-            }
-            else{
+
+            let x = Number.parseInt(select_x.value)
+            let y = Number.parseInt(select_y.value)
+
+          if(board.isInBoundary([x, y])){
+                if(typeof board.board[x][y] !== 'object'){
+                board.place_ship([x, y], i+1)
+                select_x.value = 0
+                select_y.value = 0
+                select_x.disabled = true
+                select_y.disabled = true
+                confirm_ship_loc_btn.disabled = true
+
+                } else {
+                    alert('already taken')
+                }
+            } else {
                 alert('Out of boundary')
             }
         })
@@ -44,7 +73,7 @@ function player_node(number){
         let select_y = document.createElement('select')
         select_y.className = 'selectY'
 
-        for(let j = 0; j <11;j++){
+        for(let j = 0; j <10;j++){
             select_x.add(new Option(j))
             select_y.add(new Option(j))
         }
@@ -58,13 +87,6 @@ function player_node(number){
     }
 }
     make_ship_options(player_block)
-
-
-    let board_node = board.board_node_creator()
-    board_node.className = `theBoard${number}`
-    player_container.appendChild(board_node)
-    board_node.value = board
-    
 
     player_container.children[1].addEventListener('click', ()=>{
             let allButtons = document.querySelectorAll('button')
@@ -88,10 +110,6 @@ function player_node(number){
 }
 
 function theForm(){
-
-
-
-
     let main_form = document.createElement('form')
     main_form.className = 'main_form'
 

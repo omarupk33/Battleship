@@ -17,11 +17,11 @@ export class GameBoard{
         }
 
     // Now, we can only place it horizontally
-    place_ship(location){
-        let new_ship = new Ship(1)
+    place_ship(location, length){
+        let new_ship = new Ship(length)
 
         for(let i = 0; i < new_ship.length; i++){
-            if(this.isInBoundary([location[0], location[1] + i], new_ship.length) 
+            if(this.isInBoundary([location[0], location[1] + i], length) 
             ){
                 this.board[location[0]][location[1] + i] = new_ship
             }
