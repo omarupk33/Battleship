@@ -71,10 +71,8 @@ export class GameBoard{
                     if(this.board[i][j].isSunk()){
                         button.disabled = true
                     }
-
                 })
                 }
-
                 else{
                     button.textContent = this.board[i][j]
 
@@ -83,10 +81,8 @@ export class GameBoard{
                         button.disabled = true
                     })
                 }
-
                 row.appendChild(button)
             }
-
             node.appendChild(row)
         }
         return node

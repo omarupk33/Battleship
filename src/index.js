@@ -1,5 +1,5 @@
 import { Player } from './Player'
-import "./styleSheet.css";
+import "./styleSheet.css"
 import SB from './assets/screen_background.png'
 
 function player_node(number){
@@ -17,26 +17,11 @@ function player_node(number){
     let player_name = document.createElement('h3')
     player_name.className = `player${number}`
     player_block.appendChild(player_name)
-
-    let board_node = board.board_node_creator()
-    board_node.className = `theBoard${number}`
-    player_container.appendChild(board_node)
-    board_node.value = board
     
-
-    function all_ship_placed(){
-        let confirm_ship_loc_btn = document.querySelectorAll('.confirm_loc_btn')
-        confirm_ship_loc_btn.forEach((button)=>{
-            if(!button.disabled){
-                return false
-            }
-            return true
-        })
-    }
-
     function make_ship_options(container){
     for(let i = 0; i < 5;i++){
         let ship = document.createElement('div')
+        ship.className = 'ship_selection'
         let confirm_ship_loc_btn = document.createElement('button')
         confirm_ship_loc_btn.className = 'confirm_loc_btn'
         confirm_ship_loc_btn.textContent = 'Confirm'
@@ -64,8 +49,6 @@ function player_node(number){
             }
         })
 
-
-
         ship.className = 'form_ships'
         ship.textContent = `ship (length ${i+1}): `
         let select_x = document.createElement('select')
@@ -82,11 +65,18 @@ function player_node(number){
         ship.appendChild(select_y)
         ship.appendChild(confirm_ship_loc_btn)
 
-
+    
         container.appendChild(ship)
     }
 }
     make_ship_options(player_block)
+
+    // Attempts of correcting the order of excution
+    if(player_block.querySelector('.confirm_loc_btn') == null){
+    let board_node = board.board_node_creator()
+    board_node.className = `theBoard${number}`
+    player_container.appendChild(board_node)
+    board_node.value = board
 
     player_container.children[1].addEventListener('click', ()=>{
             let allButtons = document.querySelectorAll('button')
@@ -98,13 +88,12 @@ function player_node(number){
             current_player_btns.forEach((button) =>{
             button.style.display = 'none'
     })
-
         if(board.allSunk()){
         gameOver()
         }
-
     })
 
+    }
 
     return player_container
 }
@@ -125,8 +114,6 @@ function theForm(){
     input1.placeholder = 'First player Name:'
     input1.required = true
 
-
-    
 
     let placing_ships1 = document.createElement('div')
     placing_ships1.className = 'placing_ship'
@@ -203,7 +190,6 @@ function theForm(){
         player_name1.textContent = input1.value
         player_name2.textContent = input2.value
     })
-
 
     main_form.appendChild(game_options)
     game_options.appendChild(againstWho)
