@@ -6,6 +6,5 @@ export class Player{
         this.board = new GameBoard()
         this.computerMode = computerMode
     }
-
 }
 

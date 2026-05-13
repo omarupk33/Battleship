@@ -14,32 +14,76 @@ function player_node(number){
     let player = new Player()
     let board = player.board
 
-    let player_name = document.createElement('h3')
+    let player_name = document.createElement('h1')
     player_name.className = `player${number}`
     player_block.appendChild(player_name)
     
+    let board_node
     function make_ship_options(container){
+        let all_confirmed = Array(5).fill(false)
+
     for(let i = 0; i < 5;i++){
         let ship = document.createElement('div')
         ship.className = 'ship_selection'
         let confirm_ship_loc_btn = document.createElement('button')
         confirm_ship_loc_btn.className = 'confirm_loc_btn'
         confirm_ship_loc_btn.textContent = 'Confirm'
-
-        // Work here. It's all messy yet I'm sure you can do it!!
+        
         confirm_ship_loc_btn.addEventListener('click', ()=>{
-
             let x = Number.parseInt(select_x.value)
             let y = Number.parseInt(select_y.value)
 
           if(board.isInBoundary([x, y])){
                 if(typeof board.board[x][y] !== 'object'){
                 board.place_ship([x, y], i+1)
-                select_x.value = 0
-                select_y.value = 0
-                select_x.disabled = true
-                select_y.disabled = true
-                confirm_ship_loc_btn.disabled = true
+                ship.remove()
+                all_confirmed[i] = true
+
+                if(all_confirmed.every(state => state === true)){
+                board_node = board.board_node_creator()
+                board_node.className = `theBoard${number}`
+                board_node.value = board
+                player_container.appendChild(board_node)
+            
+
+
+                if(number === 2){
+                    board_node.addEventListener('click', () => {
+                    setTimeout(() => {
+
+                        let opponent_board =
+                            document.querySelector('.theBoard1')
+
+                        let random1 = Math.floor(Math.random() * 10)
+                        let random2 = Math.floor(Math.random() * 10)
+
+                        opponent_board
+                            .children[random1]
+                            .children[random2]
+                            .click()
+
+                    }, 1000)
+                })
+            }
+
+
+
+
+                player_container.children[1].addEventListener('click', ()=>{
+                let allButtons = document.querySelectorAll('button')
+                allButtons.forEach((button)=>{
+                    button.style.display = 'block'
+                })
+
+                let current_player_btns = player_container.querySelectorAll(`button`)
+                current_player_btns.forEach((button) =>{
+                button.style.display = 'none'
+                })
+                if(board.allSunk()){
+                gameOver()
+                }
+            })
+            }
 
                 } else {
                     alert('already taken')
@@ -65,35 +109,17 @@ function player_node(number){
         ship.appendChild(select_y)
         ship.appendChild(confirm_ship_loc_btn)
 
-    
         container.appendChild(ship)
+
+
     }
+
 }
     make_ship_options(player_block)
 
-    // Attempts of correcting the order of excution
-    if(player_block.querySelector('.confirm_loc_btn') == null){
-    let board_node = board.board_node_creator()
-    board_node.className = `theBoard${number}`
-    player_container.appendChild(board_node)
-    board_node.value = board
+    // Last error here
 
-    player_container.children[1].addEventListener('click', ()=>{
-            let allButtons = document.querySelectorAll('button')
-                allButtons.forEach((button)=>{
-                    button.style.display = 'block'
-                })
-
-            let current_player_btns = player_container.querySelectorAll(`button`)
-            current_player_btns.forEach((button) =>{
-            button.style.display = 'none'
-    })
-        if(board.allSunk()){
-        gameOver()
-        }
-    })
-
-    }
+    
 
     return player_container
 }
@@ -210,20 +236,8 @@ let container = document.createElement('div')
     let player1 = player_node(1)
     let player2 = player_node(2)
 
-    let click_timer
-    let selector_option = document.querySelector('select')
-    if(selector_option.value === 'Bot'){
-        player2.children[1].addEventListener('click', ()=>{
-                
-                click_timer = setTimeout(()=>{
-                let opponent_board = document.getElementsByClassName('theBoard1')[0]
-                let random1 = Math.floor(Math.random() * 10)
-                let row = opponent_board.children[random1]
-                let random2 = Math.floor(Math.random() * 10)
-                row.children[random2].click()}, 1000)
-                }   
-        )
-        }
+
+let board2 = player2.querySelector('.theBoard2')
 
     container.appendChild(player1)
     container.appendChild(player2)

@@ -3,6 +3,7 @@ import { Ship } from "./ship.js";
 export class GameBoard{
     constructor(){
         this.board = Array(10).fill('#').map(() => Array(10).fill('#'))
+        this.node = document.createElement('div')
     }
 
     getBoard(){
@@ -16,7 +17,6 @@ export class GameBoard{
             y + length <= 10;
         }
 
-    // Now, we can only place it horizontally
     place_ship(location, length){
         let new_ship = new Ship(length)
 
@@ -53,10 +53,10 @@ export class GameBoard{
 
     
     board_node_creator(){
-        let node  = document.createElement('div')
-        node.className = 'boardNode'
+        this.node.className = 'boardNode'
         for(let i = 0; i < 10;i++){
             let row = document.createElement('div')
+            row.className = 'rows'
             for (let j = 0; j < 10;j++){
                 let button = document.createElement('button')
                 button.dataset.loc = `${i},${j}`
@@ -83,9 +83,8 @@ export class GameBoard{
                 }
                 row.appendChild(button)
             }
-            node.appendChild(row)
+            this.node.appendChild(row)
         }
-        return node
+        return this.node
     }
-
 }
