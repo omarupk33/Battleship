@@ -20,9 +20,9 @@ function player_node(number){
     
     let board_node
     function make_ship_options(container){
-        let all_confirmed = Array(5).fill(false)
+        let all_confirmed = Array(1).fill(false)
 
-    for(let i = 0; i < 5;i++){
+    for(let i = 0; i < 1;i++){
         let ship = document.createElement('div')
         ship.className = 'ship_selection'
         let confirm_ship_loc_btn = document.createElement('button')
@@ -36,8 +36,8 @@ function player_node(number){
           if(board.isInBoundary([x, y])){
                 if(typeof board.board[x][y] !== 'object'){
                 board.place_ship([x, y], i+1)
-                ship.remove()
                 all_confirmed[i] = true
+                ship.remove()
 
                 if(all_confirmed.every(state => state === true)){
                 board_node = board.board_node_creator()
@@ -45,9 +45,9 @@ function player_node(number){
                 board_node.value = board
                 player_container.appendChild(board_node)
             
+                let player2_option = document.querySelector('.select_mode').value
 
-
-                if(number === 2){
+                if(player2_option === 'Bot'){
                     board_node.addEventListener('click', () => {
                     setTimeout(() => {
 
@@ -65,10 +65,6 @@ function player_node(number){
                     }, 1000)
                 })
             }
-
-
-
-
                 player_container.children[1].addEventListener('click', ()=>{
                 let allButtons = document.querySelectorAll('button')
                 allButtons.forEach((button)=>{
@@ -116,11 +112,7 @@ function player_node(number){
 
 }
     make_ship_options(player_block)
-
-    // Last error here
-
     
-
     return player_container
 }
 
@@ -236,12 +228,8 @@ let container = document.createElement('div')
     let player1 = player_node(1)
     let player2 = player_node(2)
 
-
-let board2 = player2.querySelector('.theBoard2')
-
     container.appendChild(player1)
     container.appendChild(player2)
-
 }
 
 

@@ -15,19 +15,28 @@ export class GameBoard{
             y >= 0 &&
             x + length <= 10 &&
             y + length <= 10;
-        }
+    }
 
-    place_ship(location, length){
-        let new_ship = new Ship(length)
+place_ship(location, length) {
+    const new_ship = new Ship(length)
+    const row = location[0]
+    const col = location[1]
 
-        for(let i = 0; i < new_ship.length; i++){
-            if(this.isInBoundary([location[0], location[1] + i], length) 
-            ){
-                this.board[location[0]][location[1] + i] = new_ship
-            }
-
+    for (let i = 0; i < length; i++) {
+        if (!this.isInBoundary([row, col + i])) {
         }
     }
+
+    for (let i = 0; i < length; i++){
+        if(col <= 4){
+        this.board[row][col + i] = new_ship
+        }
+        else{
+            this.board[row][col - i] = new_ship
+        }
+    }
+
+}
 
     receiveAttack(location){
         if(typeof this.board[location[0]][location[1]] === 'object'){
@@ -65,12 +74,10 @@ export class GameBoard{
                 button.textContent = '#'
                 button.addEventListener('click', ()=>{
                     button.style.backgroundColor = 'red'
-                    
+                    button.disabled = true
                     this.receiveAttack([i, j])
                     button.textContent = 'X'
-                    if(this.board[i][j].isSunk()){
-                        button.disabled = true
-                    }
+                
                 })
                 }
                 else{
